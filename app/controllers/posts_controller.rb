@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   
   before_action :authenticate_user
-  # before_actionでensure_correct_userメソッドを指定してください
   before_action :ensure_correct_user, {only: [:edit, :update, :destroy]}
   
   def index
@@ -12,7 +11,6 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     @user = @post.user  ## post.rbのインスタンスメソッド user 
     @likes_count = Like.where(post_id: @post.id).count
-
   end
   
   def new
@@ -24,11 +22,12 @@ class PostsController < ApplicationController
       content: params[:content],
       user_id: @current_user.id
       )
+     
     if @post.save
       flash[:notice] = "新規投稿が成功しました"
       redirect_to("/posts/index")
     else
-      render("/posts/new")
+      redirect_to("/posts/new")
     end
     
   end
