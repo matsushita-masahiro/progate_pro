@@ -22,3 +22,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+これはprogateのrails の 「tweet_app」の基本バージョンです
