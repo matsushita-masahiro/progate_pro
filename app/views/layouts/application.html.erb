@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TweetApp</title>
+    <title>Pro-gate</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -21,7 +21,7 @@
         <% end %>
       </div>
       <ul class="header-menus">
-       <% if session[:user_id] %>
+       <% if @current_user %>
           <li>
             <%= link_to("投稿一覧","/posts/index") %>
           </li>
@@ -35,10 +35,9 @@
             <%= link_to("ログアウト", "/logout", {method: :post}) %>
           </li>
           <li>
-            Login User :
-            <!-- コードを追加し、ログイン中のユーザーのidを表示してください -->
-            <% user = User.find_by(id: session[:user_id]) %>
-            <%= session[:user_id]  %>
+            <% user = User.find_by(id: @current_user.id) %>
+            <%= link_to("Login User :", "/users/#{user.id}") %>
+            <%= user.name  %>
           </li>          
         <% else %>
           <li>

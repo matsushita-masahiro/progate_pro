@@ -21,6 +21,7 @@
   border-radius: 40%;
   box-shadow: 0 2px 6px #c1ced7;
   object-fit: cover;
+  float: left;
 }
 
 .user-name a {
@@ -46,7 +47,7 @@
 
 /* users/show ================================ */
 .user-show {
-  text-align: center;
+  // text-align: center;
 }
 
 .user {
@@ -54,26 +55,35 @@
 }
 
 .user img {
-  width: 80px;
-  height: 80px;
+  float: left;
+  width: 100px;
+  height: 100px;
   border-radius: 40%;
   box-shadow: 0 2px 6px #c1ced7;
-  margin: 20px 0 10px;
+  margin: 20px 10px 10px;
   object-fit: cover;
+  
 }
 
 .user h2 {
+  margin-left: 10px;
   font-size: 20px;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .user p {
+  // float: left;
+  
+  margin: 10px 10px;
   font-size: 13px;
   margin-bottom: 15px;
+  display: inline-block;
+  width: 60%;
 }
 
 .user a {
+  margin-left: 10px;
   color: #8899a6;
   text-decoration: underline;
   font-weight: 200;
@@ -114,3 +124,28 @@
 .users-form input {
   margin-bottom: 15px;
 }
+
+/* quit */
+a.quit {
+  color: red;
+}
+
+/* video */
+.video {
+  width: 30%;
+  margin: 10px;
+  float: right;
+  display: inline-block;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/*  friend  */
+.friend_status {
+  margin-left: 10px;
+}
+

@@ -11,6 +11,24 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find_by(id: params[:id])
+    # @friend = Friend.where(follower_id: @user.id).where(followed_id: @current_user.id).or(Friend.where(follower_id: @current_user.id).where(followed_id: @user.id))
+    @friend = Friend.select('status').where(follower_id: @user.id).where(followed_id: @current_user.id)
+    
+    @friend.each do |friend|
+      if friend.status == "w"
+        @flag = "w"
+      elsif friend.status == "a"
+        @flag = "a"
+      elsif friend.status == "b"
+        @flag = "b"
+      else
+        @flag = "r"
+      end
+    end
+         
+
+          
+
   end
   
   def new
@@ -42,8 +60,9 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @user.name = params[:name]
     @user.email = params[:email]
+    @user.profile = params[:profile]
     
-    # 画像を保存する処理を追加してください
+    # 画像を保存する
     if params[:image]
       @user.image_name = "#{@user.id}.jpg"
       image = params[:image]
@@ -54,7 +73,19 @@ class UsersController < ApplicationController
       File.open(picname,"wb") do |file|
         file.puts image.read
       end
-      
+    end
+    
+    # 動画を保存する
+    if params[:video]
+      @user.video_name = "#{@user.id}.mp4"
+      video = params[:video]
+      #logger.debug(image.inspect)
+      # File.binwrite("public/user_images/#{@user.image_name}", image.read)
+     
+      videoname = "public/user_videos/#{@user.video_name}"
+      File.open(videoname,"wb") do |file|
+        file.puts video.read
+      end
     end
     
     if @user.save
@@ -64,6 +95,26 @@ class UsersController < ApplicationController
       render("users/edit")
     end
   end
+  
+  def follow_request
+    @user = User.find_by(id: params[:id])
+    @friend = Friend.new(
+                         follower_id: params[:id],
+                         followed_id: @current_user.id,
+                         status: "w"  #承認待ち
+                        )
+                        
+    if @friend.save
+        flash[:notice] = "#{@user.name}さんに友達申請しました"
+        redirect_to("/users/#{@user.id}")
+    else
+        render("/users/#{@user.id}")
+    end
+    
+  end
+  
+  
+  
   
   def login_form
   end
@@ -88,6 +139,26 @@ class UsersController < ApplicationController
     session[:user_id] = nil
     flash[:notice] = "ログアウトしました"
     redirect_to("/login")
+  end
+  
+  def quit_confirm
+    @user = User.find_by(id: params[:id])
+  end
+  
+  def destroy
+      @user = User.find_by(id: params[:id])
+      if @user      
+        if @user.destroy
+          flash[:notice] = "#{@user.name}様、退会処理完了しました"
+          session[:user_id] = nil
+          redirect_to("/signup")
+        else
+          render("/users/index")
+        end
+      else
+        flash[:notice] = "存在しないユーザーです"
+        redirect_to("/signup")        
+      end
   end
   
   def likes

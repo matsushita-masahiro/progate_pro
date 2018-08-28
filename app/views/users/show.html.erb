@@ -1,12 +1,32 @@
 <div class="main user-show">
   <div class="container">
     <div class="user">
-      <!-- <img>タグを用いて、プロフィール画像を表示してください -->
-      <img src="<%= "/user_images/#{@user.image_name}" %>">
+      <div class="clearfix">
+        <img src="<%= "/user_images/#{@user.image_name}" %>">
+        <% if File.exist?("public/user_videos/#{@user.video_name}") %>
+        <%= video_tag("/user_videos/#{@user.video_name}",class: "video",muted: true,autoplay: true,loop: true,size: "150") %>
+        <% end %>
+        <p><%= @user.profile %></p>
+      </div>
       <h2><%= @user.name %></h2>
       <p><%= @user.email %></p>
       <% if @user.id == @current_user.id %>
-      <%= link_to("編集", "/users/#{@user.id}/edit") %>
+        <%= link_to("編集", "/users/#{@user.id}/edit") %>
+        <%= link_to("退会する", "/users/#{@user.id}/quit_confirm") %>
+      <% else %>
+        <div class="friend_status">
+        <% if @flag == "r" %>
+          <%= link_to("友達申請する", "/users/#{@user.id}/follow_request", {method: "post"}) %>
+        <% elsif @flag == "w" %>
+          <%= "On request..." %>
+        <% elsif @flag == "a" %>
+          <%= "We ara Friend !" %>
+        <% elsif @flag == "b" %>
+          <%= "/Blocking." %>
+        <% else %>
+          <% "Else" %>
+        <% end %>
+        </div>
       <% end %>
     </div>
     

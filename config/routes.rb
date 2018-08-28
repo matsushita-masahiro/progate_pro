@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get "users/index" => "users#index"
   get "users/:id" => "users#show"
   get "users/:id/likes" => "users#likes"
+  get "users/:id/quit_confirm" => "users#quit_confirm"
+  post "users/:id/destroy" => "users#destroy"
+  post "users/:id/follow_request" => "users#follow_request"
 
 
   get "posts/index" => "posts#index"

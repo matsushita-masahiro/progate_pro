@@ -12,10 +12,14 @@
         <%= form_tag("/users/#{@user.id}/update", { :name => :formedit, multipart: true}) do %>
           <p>ユーザー名</p>
           <input name="name" value="<%= @user.name %>">
-          <p>画像</p>
-          <input name="image" type="file">
           <p>メールアドレス</p>
           <input name="email" value="<%= @user.email %>">
+          <p>画像</p>
+          <input name="image" type="file">
+          <p>動画</p>
+          <input name="video" type="file">
+          <p>プロフィール（70文字まで）</p>
+          <textarea name="profile" ><%= @user.profile %></textarea>
           <input type="submit" value="保存">
         <% end %>
       </div>
