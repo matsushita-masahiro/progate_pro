@@ -32,5 +32,27 @@
       <% end %>
       
     </div>
+    
+    <div class="posts-show-comments">
+      <h3>Comments</h3>
+      <% if @post.comments.any? %>
+        <ul>
+        <% @post.comments.each do |comment| %>
+        <li>
+          <%= comment.content %>
+        </li>
+        <% end %>
+        </ul>
+      <% end %>
+        <%= form_for ([@post, Comment.new]) do |f| %>
+      <p>
+        <%= f.text_area :content %>
+      </p>
+      <p>
+        <%= f.submit %>
+      </p>
+      <% end %>
+    </div>
+
   </div>
 </div>

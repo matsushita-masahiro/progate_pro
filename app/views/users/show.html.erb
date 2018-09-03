@@ -4,7 +4,7 @@
       <div class="clearfix">
         <img src="<%= "/user_images/#{@user.image_name}" %>">
         <% if File.exist?("public/user_videos/#{@user.video_name}") %>
-        <%= video_tag("/user_videos/#{@user.video_name}",class: "video",muted: true,autoplay: true,loop: true,size: "150") %>
+        <%= video_tag("/user_videos/#{@user.video_name}",class: "video",muted: true,control: true,autoplay: true,loop: true,size: "150") %>
         <% end %>
         <p><%= @user.profile %></p>
       </div>

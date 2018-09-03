@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get "users/:id/quit_confirm" => "users#quit_confirm"
   post "users/:id/destroy" => "users#destroy"
   post "users/:id/follow_request" => "users#follow_request"
-
+  
 
   get "posts/index" => "posts#index"
   get "posts/new" => "posts#new"
@@ -26,6 +26,12 @@ Rails.application.routes.draw do
   get "posts/:id/edit" => "posts#edit"
   post "posts/:id/update" => "posts#update"
   post "posts/:id/destroy" => "posts#destroy"
+  
+  resources :posts do
+    resources :comments, only: [:index, :create, :destroy, :update], shallow: true
+  end
+
+
   
   get "/" => "home#top"
   get "about" => "home#about"
